@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import imagenVertical from './assets/imagenVertical.jpg';
-import ListaRecetas from './componentes/ListaRecetas';
-import Formulario from './componentes/Formulario'; 
-import Navbar from './componentes/Navbar';
-import Footer from './componentes/Footer';
-import Header from './componentes/Header';
-import RecetasParaPedir from './componentes/RecetasParaPedir';
-import { RecetaProvider } from './RecetaContext';
-import recetasData from './data/recetas'; 
+import imagenVertical from './shared/assets/imagenVertical.jpg';
+import ListaRecetas from './features/recetas/components/ListaRecetas';
+import Formulario from './features/recetas/components/Formulario';
+import Navbar from './shared/components/Navbar';
+import Footer from './shared/components/Footer';
+import Header from './shared/components/Header';
+import RecetasParaPedir from './features/pedidos/components/RecetasParaPedir';
+import { RecetaProvider } from './shared/contexts/RecetaContext';
+import recetasData from './features/recetas/data/recetas';
 import 'animate.css';
-import './App.css';
+import './shared/styles/App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('pedidos-recetas'); 
-  const [recetas, setRecetas] = useState(recetasData); 
+  const [currentPage, setCurrentPage] = useState('pedidos-recetas');
+  const [recetas, setRecetas] = useState(recetasData);
 
   const handleVerDetalle = (id) => {
     console.log(`Receta ${id} clickeada.`);
@@ -21,7 +21,7 @@ function App() {
 
   const renderMainContent = () => {
     if (currentPage === 'formulario') {
-      return <Formulario />; 
+      return <Formulario />;
     } else if (currentPage === 'pedidos-recetas') {
       return <RecetasParaPedir />;
     } else {
@@ -37,14 +37,15 @@ function App() {
   };
 
   return (
-    <RecetaProvider> 
+    <RecetaProvider>
       <div className="App">
-        <Navbar onNavigate={setCurrentPage} /> 
+        <Navbar onNavigate={setCurrentPage} />
         <Header />
-        {renderMainContent()} 
+        {renderMainContent()}
         <Footer />
       </div>
     </RecetaProvider>
   );
 }
+
 export default App;

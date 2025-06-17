@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import recetasData from './data/recetas';
+import recetasData from '../../features/recetas/data/recetas';
 
 export const RecetaContext = createContext();
 

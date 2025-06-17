@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import 'animate.css';
-import bandejaImage from '../assets/recetas/bandeja.jpg';
-import ajiacoImage from '../assets/recetas/ajiaco.jpg';
-import tamaleImage from '../assets/recetas/tamale.jpg';
-import sancochoImage from '../assets/recetas/sancocho.jpg';
+import bandejaImage from '../../assets/bandeja.jpg';
+import ajiacoImage from '../../assets/ajiaco.jpg';
+import tamaleImage from '../../assets/tamale.jpg';
+import sancochoImage from '../../assets/sancocho.jpg';
 
 function RecetaPedido({ id, nombre, descripcion, precio, imagen }) {
   const [cantidad, setCantidad] = useState(0);
