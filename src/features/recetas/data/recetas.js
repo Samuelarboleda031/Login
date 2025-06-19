@@ -1,3 +1,4 @@
+//recetas.js
 const recetasData = [
   {
     id: 1,

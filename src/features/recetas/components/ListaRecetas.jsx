@@ -1,3 +1,4 @@
+// ListaRecetas.jsx
 import React from 'react';
 import TarjetaReceta from './TarjetaReceta';
 

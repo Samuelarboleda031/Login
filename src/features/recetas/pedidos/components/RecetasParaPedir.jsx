@@ -1,5 +1,6 @@
+// RecetasParaPedir.jsx
 import React, { useContext } from 'react';
-import { RecetaContext } from '../../../shared/contexts/RecetaContext';
+import { RecetaContext } from "../../../../shared/contexts/RecetaContext";
 import RecetaPedido from './RecetaPedido';
 
 function RecetasParaPedir() {
