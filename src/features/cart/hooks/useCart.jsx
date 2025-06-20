@@ -1,4 +1,3 @@
-// src/features/cart/hooks/useNotification.jsx
 import { useRef, useCallback } from 'react';
 
 export const useNotification = () => {
@@ -6,12 +5,10 @@ export const useNotification = () => {
     const timeoutRef = useRef(null);
 
     const showNotification = useCallback((message, type = 'success', duration = 3000) => {
-        // Limpiar timeout anterior
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
         }
 
-        // Crear elemento de notificación si no existe
         if (!notificationRef.current) {
             notificationRef.current = document.createElement('div');
             notificationRef.current.style.cssText = `
@@ -24,46 +21,42 @@ export const useNotification = () => {
                 color: white;
                 font-weight: 500;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                transform: translateX(100%); /* Inicialmente fuera de pantalla */
+                transform: translateX(100%);
                 transition: transform 0.3s ease;
                 max-width: 300px;
             `;
             document.body.appendChild(notificationRef.current);
         }
 
-        // Configurar color según el tipo
         const backgroundColor = {
-            success: '#28a745', // Verde
-            error: '#dc3545',   // Rojo
-            info: '#007bff',    // Azul
-            warning: '#ffc107'  // Amarillo
-        }[type] || '#28a745'; // Por defecto, verde
+            success: '#28a745',
+            error: '#dc3545',
+            info: '#007bff',
+            warning: '#ffc107'
+        }[type] || '#28a745';
 
         notificationRef.current.style.backgroundColor = backgroundColor;
         notificationRef.current.textContent = message;
 
-        // Mostrar notificación con animación
         setTimeout(() => {
             if (notificationRef.current) {
-                notificationRef.current.style.transform = 'translateX(0)'; // Deslizar hacia adentro
+                notificationRef.current.style.transform = 'translateX(0)';
             }
-        }, 100); // Pequeño retraso para asegurar que la transición se aplique
+        }, 100);
 
-        // Ocultar después del tiempo especificado
         timeoutRef.current = setTimeout(() => {
             if (notificationRef.current) {
-                notificationRef.current.style.transform = 'translateX(100%)'; // Deslizar hacia afuera
-                
-                // Remover del DOM después de que la animación de salida termine
+                notificationRef.current.style.transform = 'translateX(100%)';
+
                 setTimeout(() => {
                     if (notificationRef.current && document.body.contains(notificationRef.current)) {
                         document.body.removeChild(notificationRef.current);
-                        notificationRef.current = null; // Limpiar la referencia
+                        notificationRef.current = null;
                     }
-                }, 300); // Coincide con la duración de la transición
+                }, 300);
             }
         }, duration);
-    }, []); // La dependencia vacía asegura que la función no se recrea innecesariamente
+    }, []);
 
     return { showNotification };
 };

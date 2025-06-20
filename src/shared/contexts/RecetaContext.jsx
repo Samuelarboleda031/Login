@@ -1,4 +1,3 @@
-// RecetaContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
 import recetasData from '../../features/recetas/data/recetas';
 

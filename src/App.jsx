@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState } from 'react';
 import imagenVertical from './shared/assets/imagenVertical.jpg';
 import ListaRecetas from './features/recetas/components/ListaRecetas';
@@ -14,53 +13,48 @@ import { Cart } from './features/cart/components/Cart';
 
 import 'animate.css';
 import './shared/styles/App.css';
-import './shared/styles/estiloLanding.css'; // Asegurarse de importar tus estilos de landing/carrito aquí
+import './shared/styles/estiloLanding.css';
 
 function App() {
-  // Cambiamos el estado inicial de 'currentPage' de 'pedidos-recetas' a 'recetas'
-  const [currentPage, setCurrentPage] = useState('recetas'); 
-  const [recetas, setRecetas] = useState(recetasData); // Tus recetas principales
+    const [currentPage, setCurrentPage] = useState('recetas');
+    const [recetas, setRecetas] = useState(recetasData);
 
-  const handleVerDetalle = (id) => {
-    console.log(`Receta ${id} clickeada.`);
-    // Aquí podrías implementar la lógica para ver el detalle de una receta
-    // Por ejemplo, cambiar el estado a una página de detalle de receta
-  };
+    const handleVerDetalle = (id) => {
+        console.log(`Receta ${id} clickeada.`);
+    };
 
-  const renderMainContent = () => {
-    if (currentPage === 'formulario') {
-      return <Formulario />;
-    } else if (currentPage === 'pedidos-recetas') {
-      return <RecetasParaPedir />;
-    } else if (currentPage === 'recetas') { // Mostrar ListaRecetas para la página 'recetas'
-      return (
-        <div className="main-content-wrapper">
-          <div className="contenido-principal">
-            {/* Aquí TarjetaReceta ahora tiene la lógica de carrito */}
-            <ListaRecetas recetas={recetas} onVerDetalle={handleVerDetalle} />
-          </div>
-          <img src={imagenVertical} alt="Imagen Vertical" className="imagen-derecha" />
-        </div>
-      );
-    } else {
-      // Si no coincide con ninguna página, puedes mostrar un default o error
-      return <p className="text-center mt-5">Contenido no encontrado.</p>;
-    }
-  };
+    const renderMainContent = () => {
+        if (currentPage === 'formulario') {
+            return <Formulario />;
+        } else if (currentPage === 'pedidos-recetas') {
+            return <RecetasParaPedir />;
+        } else if (currentPage === 'recetas') {
+            return (
+                <div className="main-content-wrapper">
+                    <div className="contenido-principal">
+                        <ListaRecetas recetas={recetas} onVerDetalle={handleVerDetalle} />
+                    </div>
+                    <img src={imagenVertical} alt="Imagen Vertical" className="imagen-derecha" />
+                </div>
+            );
+        } else {
+            return <p className="text-center mt-5">Contenido no encontrado.</p>;
+        }
+    };
 
-  return (
-    <RecetaProvider> {/* Tu proveedor de contexto de recetas */}
-      <CartProvider> {/* Envuelve toda la aplicación con CartProvider */}
-        <div className="App">
-          <Navbar onNavigate={setCurrentPage} />
-          <Header /> {/* Tu Header simple */}
-          {renderMainContent()}
-          <Footer />
-          <Cart /> {}
-        </div>
-      </CartProvider>
-    </RecetaProvider>
-  );
+    return (
+        <RecetaProvider>
+            <CartProvider>
+                <div className="App">
+                    <Navbar onNavigate={setCurrentPage} />
+                    <Header />
+                    {renderMainContent()}
+                    <Footer />
+                    <Cart />
+                </div>
+            </CartProvider>
+        </RecetaProvider>
+    );
 }
 
 export default App;

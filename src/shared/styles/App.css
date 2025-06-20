@@ -401,7 +401,7 @@ body {
   box-shadow: 0 0 0 2px rgba(119, 119, 119, 0.5);
 }
 
-.receta-pedido-card > button {
+.receta-pedido-card>button {
   background-color: #d2b48c;
   color: #1a1a1a;
   font-weight: 700;
@@ -418,16 +418,16 @@ body {
   outline: none;
 }
 
-.receta-pedido-card > button:hover:not(:disabled) {
+.receta-pedido-card>button:hover:not(:disabled) {
   background-color: #b0976b;
   transform: scale(1.05);
 }
 
-.receta-pedido-card > button:focus {
+.receta-pedido-card>button:focus {
   box-shadow: 0 0 0 2px rgba(210, 180, 140, 0.5);
 }
 
-.receta-pedido-card > button:disabled {
+.receta-pedido-card>button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
@@ -460,6 +460,7 @@ body {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -782,9 +783,11 @@ body {
   0% {
     transform: scale(0.8);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
@@ -800,19 +803,24 @@ body {
   .cart-header h3 {
     font-size: 1.3rem;
   }
+
   .cart-item-image {
     width: 70px;
     height: 70px;
   }
+
   .cart-item-title {
     font-size: 0.9rem;
   }
+
   .cart-item-price {
     font-size: 0.85rem;
   }
+
   .item-total {
     font-size: 0.8rem;
   }
+
   .cart-actions .btn {
     font-size: 0.9rem;
     padding: 0.6rem 0.8rem;

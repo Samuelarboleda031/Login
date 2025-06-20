@@ -1,4 +1,3 @@
-// src/shared/components/Navbar.jsx
 import React from 'react';
 import { CartButton } from '../../features/cart/components/CartButton';
 import 'bootstrap/dist/css/bootstrap.min.css';

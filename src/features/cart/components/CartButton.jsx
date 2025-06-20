@@ -7,7 +7,7 @@ export const CartButton = () => {
     return (
         <button 
             id="cart-button"
-            className="btn-cart-toggle position-relative ms-auto" // Clase personalizada para el botón del carrito
+            className="btn-cart-toggle position-relative ms-auto" 
             onClick={toggleCart}
             aria-label={`Carrito de compras con ${itemCount} productos`}
         >
