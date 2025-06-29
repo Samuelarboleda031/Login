@@ -1,15 +1,21 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartButton } from '../../features/cart/components/CartButton';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function Navbar({ onNavigate }) {
+const Navbar = ({ isAuthenticated, user, onLogout }) => {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/login', { replace: true });
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-custom-bg">
+    <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#" onClick={() => onNavigate('pedidos-recetas')}>
-          Mi Libro de Recetas
-        </a>
+        <Link className="navbar-brand" to={isAuthenticated ? '/dashboard' : '/login'}>
+          Recetas App
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -23,30 +29,53 @@ function Navbar({ onNavigate }) {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('recetas')}>Inicio</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('formulario')}>Formulario</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('recetas')}>Recetas</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('pedidos-recetas')}>Pedidos de Recetas</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('categorias')}>Categorías</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={() => onNavigate('contacto')}>Contacto</a>
-            </li>
+            {isAuthenticated ? (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/dashboard">
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/recetas">
+                    Recetas
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/formulario">
+                    Formulario
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/pedidos-recetas">
+                    Pedidos
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Iniciar Sesión
+                </Link>
+              </li>
+            )}
           </ul>
-          <CartButton />
+          <div className="d-flex align-items-center">
+            {isAuthenticated && user && (
+              <span className="navbar-text me-3">
+                Hola, {user.name}
+              </span>
+            )}
+            {isAuthenticated && <CartButton />}
+            {isAuthenticated && (
+              <button className="btn btn-outline-danger ms-2" onClick={handleLogoutClick}>
+                Cerrar Sesión
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </nav>
   );
-}
-
+};
 export default Navbar;

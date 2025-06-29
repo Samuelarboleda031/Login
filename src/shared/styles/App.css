@@ -52,6 +52,11 @@ body {
   color: #b0976b !important;
 }
 
+.navbar-text {
+  color: #d2b48c !important;
+  font-weight: bold;
+}
+
 .app-header {
   background-color: #1a1a1a;
   color: #d2b48c;
@@ -182,6 +187,7 @@ body {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
+  color: #d2b48c;
 }
 
 .form-group input {
@@ -192,6 +198,18 @@ body {
   background-color: #444;
   color: #f0f0f0;
   font-size: 1em;
+  /* Asegura que el color del texto del placeholder también sea oscuro */
+  /* Propiedades para sobrescribir estilos de Bootstrap para placeholder */
+  &::placeholder {
+    color: #999; /* Color oscuro para el placeholder */
+    opacity: 1; /* Firefox lo pone más claro por defecto */
+  }
+  &:-ms-input-placeholder {
+    color: #999;
+  }
+  &::-ms-input-placeholder {
+    color: #999;
+  }
 }
 
 .form-group input:focus {
@@ -308,6 +326,7 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
+  color: #f0f0f0;
 }
 
 .receta-pedido-card p:nth-of-type(1) {
@@ -359,7 +378,7 @@ body {
 
 .control-cantidad button:first-child {
   background-color: #444;
-  color: #ffffff;
+  color: #f0f0f0;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
 }
@@ -377,7 +396,7 @@ body {
   margin-right: 1rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ffffff;
+  color: #f0f0f0;
   background-color: #4b5563;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -388,7 +407,7 @@ body {
 
 .control-cantidad button:last-child {
   background-color: #777;
-  color: #ffffff;
+  color: #f0f0f0;
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
 }
@@ -596,7 +615,7 @@ body {
 
 .btn-qty-cart-control {
   background-color: #555;
-  color: #fff;
+  color: #f0f0f0;
   border: none;
   width: 30px;
   height: 30px;
@@ -634,7 +653,7 @@ body {
   top: 8px;
   right: 8px;
   background-color: #dc3545;
-  color: white;
+  color: #f0f0f0;
   border: none;
   width: 28px;
   height: 28px;
@@ -692,7 +711,7 @@ body {
 
 .btn-clear-cart:hover {
   background-color: #dc3545;
-  color: white;
+  color: #f0f0f0;
 }
 
 .btn-checkout {
@@ -728,7 +747,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #555;
-  color: #fff;
+  color: #f0f0f0;
   border: none;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
@@ -772,7 +791,7 @@ body {
 
 .btn-success-feedback {
   background-color: #28a745 !important;
-  color: white !important;
+  color: #f0f0f0 !important;
 }
 
 .position-relative .badge {
@@ -793,9 +812,226 @@ body {
   }
 }
 
+.btn-cart-toggle {
+  color: #f0f0f0;
+  border: 1px solid #f0f0f0;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.btn-cart-toggle:hover {
+  background-color: #d2b48c;
+  color: #1a1a1a;
+  border-color: #d2b48c;
+}
+
+.btn-cart-toggle .bi {
+  font-size: 1.25rem;
+}
+
+.login-page,
+.dashboard-page {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 20px;
+}
+
+.login-container,
+.dashboard-container {
+  max-width: 450px;
+  width: 100%;
+  padding: 30px;
+  background-color: #2c2c2c; /* Asegurado que no sea blanco */
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  color: #d2b48c;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.login-container h2,
+.dashboard-container h1 {
+  color: #f0f0f0;
+  margin-bottom: 25px;
+  font-size: 2em;
+}
+
+.login-form .form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #d2b48c;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background-color: #444;
+  color: #f0f0f0;
+  font-size: 1.05em;
+  box-sizing: border-box;
+  /* Asegura que el color del texto del placeholder también sea oscuro */
+  &::placeholder {
+    color: #999;
+    opacity: 1;
+  }
+  &:-ms-input-placeholder {
+    color: #999;
+  }
+  &::-ms-input-placeholder {
+    color: #999;
+  }
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #d2b48c;
+  box-shadow: 0 0 8px rgba(210, 180, 140, 0.6);
+}
+
+.login-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #d2b48c;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: #b0976b;
+  transform: translateY(-2px);
+}
+
+.login-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.alert-danger {
+  background-color: #dc3545; /* Asegurado que sea un color oscuro para la alerta */
+  color: #f0f0f0; /* Texto claro para la alerta */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 0.95em;
+}
+
+.login-info {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #999;
+}
+
+.login-info p {
+  margin-bottom: 5px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2em;
+  color: #f0f0f0;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.dashboard-content {
+  background-color: #333;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.user-info {
+  text-align: center;
+}
+
+.user-info h2 {
+  font-size: 1.5em;
+  color: #d2b48c;
+  margin-bottom: 20px;
+}
+
+.user-avatar {
+  margin-bottom: 20px;
+}
+
+.user-avatar img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #d2b48c;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.user-info p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #f0f0f0;
+}
+
+.user-info p strong {
+  color: #d2b48c;
+}
+
 @media (max-width: 768px) {
   .cart-sidebar {
     width: 100vw;
+  }
+  .login-container,
+  .dashboard-container {
+    padding: 20px;
+  }
+  .login-container h2,
+  .dashboard-container h1 {
+    font-size: 1.8em;
+  }
+  .login-button {
+    font-size: 1.1em;
+    padding: 12px;
+  }
+  .logout-button {
+    padding: 8px 15px;
+    font-size: 0.9em;
   }
 }
 
@@ -825,23 +1061,39 @@ body {
     font-size: 0.9rem;
     padding: 0.6rem 0.8rem;
   }
-}
-
-.btn-cart-toggle {
-  color: #f0f0f0;
-  border: 1px solid #f0f0f0;
-  background-color: transparent;
-  transition: all 0.2s ease;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
-}
-
-.btn-cart-toggle:hover {
-  background-color: #d2b48c;
-  color: #1a1a1a;
-  border-color: #d2b48c;
-}
-
-.btn-cart-toggle .bi {
-  font-size: 1.25rem;
+  .login-page,
+  .dashboard-page {
+    padding: 10px;
+  }
+  .login-container,
+  .dashboard-container {
+    padding: 15px;
+  }
+  .login-container h2,
+  .dashboard-container h1 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+  }
+  .login-form label {
+    font-size: 0.9em;
+  }
+  .login-form input {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .login-button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .user-avatar img {
+    width: 100px;
+    height: 100px;
+  }
+  .user-info p {
+    font-size: 1em;
+  }
 }
