@@ -1,4 +1,4 @@
-/*estiloLanding.css*/
+/*src/shared/styles/estiloLanding.css*/
 .cart-overlay {
     position: fixed;
     top: 0;
@@ -9,6 +9,14 @@
     z-index: 9999;
     display: flex;
     justify-content: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.cart-overlay.open {
+    opacity: 1;
+    visibility: visible;
 }
 
 .cart-sidebar {
@@ -16,23 +24,16 @@
     max-width: 90vw;
     height: 100vh;
     background-color: #333;
-    /* Fondo del carrito acorde al tema oscuro */
     box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
-    animation: slideInRight 0.3s ease-out;
     color: #f0f0f0;
-    /* Color de texto claro */
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(0);
-    }
+.cart-overlay.open .cart-sidebar {
+    transform: translateX(0);
 }
 
 .cart-header {
@@ -58,25 +59,20 @@
     font-size: 1.8rem;
 }
 
-/* Estilo para el botón de cerrar carrito */
 .btn-close-cart {
     background-color: transparent;
     border: 1px solid #666;
     color: #ccc;
     transition: all 0.2s ease;
     padding: 0.4rem 0.6rem;
-    /* Ajustar padding para que sea más pequeño */
     border-radius: 4px;
-    /* Un poco redondeado */
 }
 
 .btn-close-cart:hover {
     background-color: #d2b48c;
-    /* Color de acento al pasar el ratón */
     color: #1a1a1a;
     border-color: #d2b48c;
 }
-
 
 .cart-content {
     flex: 1;
@@ -104,7 +100,6 @@
     font-size: 1.1rem;
     margin-top: 1rem;
 }
-
 
 .cart-items {
     flex: 1;
@@ -162,7 +157,6 @@
     font-size: 0.95rem;
 }
 
-/* Estilos para los botones de cantidad en CartItem */
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -171,9 +165,8 @@
 }
 
 .btn-qty-cart-control {
-    background-color: #555;
-    /* Color similar al de los controles en TarjetaReceta */
-    color: #fff;
+    background-color: #d2b48c;
+    color: #d2b48c;
     border: none;
     width: 30px;
     height: 30px;
@@ -186,8 +179,7 @@
 
 .btn-qty-cart-control:hover {
     background-color: #d2b48c;
-    /* Color de acento al pasar el ratón */
-    color: #1a1a1a;
+    color: #d2b48c;
 }
 
 .quantity-controls .quantity {
@@ -207,13 +199,11 @@
     font-weight: 500;
 }
 
-/* Estilo para el botón de eliminar item del carrito */
 .btn-remove-item {
     position: absolute;
     top: 8px;
     right: 8px;
     background-color: #dc3545;
-    /* Rojo para eliminar */
     color: white;
     border: none;
     width: 28px;
@@ -229,7 +219,6 @@
 .btn-remove-item:hover {
     background-color: #c82333;
 }
-
 
 .cart-footer {
     padding: 1rem;
@@ -259,7 +248,6 @@
     gap: 0.75rem;
 }
 
-/* Estilo para el botón "Vaciar" del carrito */
 .btn-clear-cart {
     flex: 1;
     padding: 0.75rem 1rem;
@@ -268,9 +256,7 @@
     font-weight: bold;
     transition: all 0.2s ease;
     color: #dc3545;
-    /* Rojo para el texto */
     border: 1px solid #dc3545;
-    /* Borde rojo */
     background-color: transparent;
 }
 
@@ -279,7 +265,6 @@
     color: white;
 }
 
-/* Estilo para el botón "Comprar" del carrito */
 .btn-checkout {
     flex: 1;
     padding: 0.75rem 1rem;
@@ -288,10 +273,8 @@
     font-weight: bold;
     transition: all 0.2s ease;
     background-color: #d2b48c;
-    /* Color de acento para comprar */
     border-color: #d2b48c;
     color: #1a1a1a;
-    /* Texto oscuro para contraste */
 }
 
 .btn-checkout:hover {
@@ -300,8 +283,6 @@
     color: #1a1a1a;
 }
 
-
-/* Animación para las tarjetas de producto (.tarjeta-receta) */
 .tarjeta-receta {
     transition: all 0.3s ease;
     border: none;
@@ -345,8 +326,6 @@
     margin-bottom: 1rem;
 }
 
-
-/* Estilos para los botones de cantidad en TarjetaReceta */
 .quantity-section {
     background-color: #2a2a2a;
     border-radius: 8px;
@@ -355,7 +334,6 @@
 }
 
 .btn-qty-control {
-    /* Clase personalizada para los botones +/- de cantidad */
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -363,9 +341,7 @@
     align-items: center;
     justify-content: center;
     background-color: #555;
-    /* Fondo oscuro */
     color: #fff;
-    /* Texto blanco */
     border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease;
@@ -373,9 +349,7 @@
 
 .btn-qty-control:hover {
     background-color: #d2b48c;
-    /* Color de acento al pasar el ratón */
     color: #1a1a1a;
-    /* Texto oscuro */
 }
 
 .quantity-section .mx-3 {
@@ -385,16 +359,12 @@
     text-align: center;
 }
 
-
-/* Estilo para el botón "Agregar al carrito" en TarjetaReceta */
 .btn-add-to-cart {
     display: block;
     width: 100%;
     padding: 12px 20px;
     background-color: #d2b48c;
-    /* Color de acento */
     color: #1a1a1a;
-    /* Texto oscuro */
     border: none;
     border-radius: 4px;
     font-size: 1.1em;
@@ -405,7 +375,6 @@
 
 .btn-add-to-cart:hover:not(:disabled) {
     background-color: #b0976b;
-    /* Tono más oscuro del acento al pasar el ratón */
 }
 
 .btn-add-to-cart:disabled {
@@ -414,15 +383,11 @@
     opacity: 0.7;
 }
 
-/* Feedback de éxito para el botón "Agregado" */
 .btn-success-feedback {
     background-color: #28a745 !important;
-    /* Verde de éxito */
     color: white !important;
 }
 
-
-/* ✨ Animación del badge del CartButton */
 .position-relative .badge {
     animation: pulse 0.5s ease-in-out;
 }
@@ -431,18 +396,14 @@
     0% {
         transform: scale(0.8);
     }
-
     50% {
         transform: scale(1.2);
     }
-
     100% {
         transform: scale(1);
     }
 }
 
-
-/* 📱 Responsive para el carrito */
 @media (max-width: 768px) {
     .cart-sidebar {
         width: 100vw;
@@ -453,53 +414,78 @@
     .cart-header h3 {
         font-size: 1.3rem;
     }
-
     .cart-item-image {
         width: 70px;
         height: 70px;
     }
-
     .cart-item-title {
         font-size: 0.9rem;
     }
-
     .cart-item-price {
         font-size: 0.85rem;
     }
-
     .item-total {
         font-size: 0.8rem;
     }
-
     .cart-actions .btn {
         font-size: 0.9rem;
         padding: 0.6rem 0.8rem;
     }
 }
 
-/* Estilo para el botón del carrito en el Navbar */
 .btn-cart-toggle {
     color: #f0f0f0;
-    /* Color de texto del Navbar */
     border: 1px solid #f0f0f0;
-    /* Borde claro */
     background-color: transparent;
     transition: all 0.2s ease;
     padding: 0.5rem 0.75rem;
-    /* Padding adecuado */
     border-radius: 0.25rem;
-    /* Bordes ligeramente redondeados */
 }
 
 .btn-cart-toggle:hover {
     background-color: #d2b48c;
-    /* Color de acento al pasar el ratón */
     color: #1a1a1a;
-    /* Texto oscuro */
     border-color: #d2b48c;
-    /* Borde del color de acento */
 }
 
 .btn-cart-toggle .bi {
     font-size: 1.25rem;
+}
+.cart-item .quantity-controls .btn-outline-secondary {
+    background-color: #d2b48c;
+    border-color: #d2b48c;
+    color: #1a1a1a;
+    border-radius: 4px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.cart-item .quantity-controls .btn-outline-secondary:hover {
+    background-color: #b0976b;
+    border-color: #b0976b;
+    color: #1a1a1a;
+}
+
+.cart-item .btn-outline-danger.remove-btn {
+    background-color: transparent;
+    border-color: #dc3545;
+    color: #dc3545;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cart-item .btn-outline-danger.remove-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
 }

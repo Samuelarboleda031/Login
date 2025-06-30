@@ -1,9 +1,11 @@
-import 'animate.css';
-import './shared/styles/App.css';
-import './shared/styles/estiloLanding.css';
+/*src/App.jsx*/
+import React from 'react';
+import AppRouter from './router';
 
 function App() {
-    return null;
+    return (
+        <AppRouter />
+    );
 }
 
 export default App;

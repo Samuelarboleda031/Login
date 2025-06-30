@@ -1,3 +1,4 @@
+/*src/features/auth/components/LoginForm.jsx*/
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
@@ -50,8 +51,8 @@ const LoginForm = ({ onNavigateToRegister }) => {
 
         <div className="login-info text-center mt-3 text-white">
           <p className="mb-1">Para pruebas usar:</p>
-          <p className="mb-0">Email: john@mail.com</p>
-          <p className="mb-0">Contraseña: changeme</p>
+          <p className="mb-0">Email:john@mail.com</p>
+          <p className="mb-0">Contraseña:changeme</p>
         </div>
         {onNavigateToRegister && (
             <p className="text-center mt-3">

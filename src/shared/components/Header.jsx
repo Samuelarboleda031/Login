@@ -1,3 +1,4 @@
+/*src/shared/components/Header.jsx*/
 import React from 'react';
 
 function Header() {

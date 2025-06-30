@@ -1,3 +1,4 @@
+/*src/features/auth/pages/DashboardPage.jsx*/
 import React from 'react';
 import Dashboard from '../components/Dashboard';
 import { useSelector } from 'react-redux';

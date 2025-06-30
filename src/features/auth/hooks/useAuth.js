@@ -1,3 +1,4 @@
+/*src/features/auth/hooks/useAuth.js*/
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../slices/authThunks';
 import { logout } from '../slices/authSlice';

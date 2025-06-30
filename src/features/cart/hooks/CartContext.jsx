@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useReducer, useRef, useEffect } from 'react';
-import { useNotification } from './useCart';
+import React, { createContext, useContext, useReducer, useRef } from 'react';
 
 const CART_ACTIONS = {
     ADD_ITEM: 'ADD_ITEM',
@@ -19,21 +18,38 @@ const initialState = {
 function cartReducer(state, action) {
     switch (action.type) {
         case CART_ACTIONS.ADD_ITEM: {
-            const existingItem = state.items.find(item => item.id === action.payload.id);
+            const { product, quantity = 1 } = action.payload;
+
+            console.log("CartReducer - ADD_ITEM: Producto recibido:", product, "Cantidad:", quantity);
+
+            const existingItem = state.items.find(item => item.id === product.id);
 
             let newItems;
             if (existingItem) {
                 newItems = state.items.map(item =>
-                    item.id === action.payload.id
-                        ? { ...item, quantity: item.quantity + 1 }
+                    item.id === product.id
+                        ? { ...item, quantity: item.quantity + quantity }
                         : item
                 );
             } else {
-                newItems = [...state.items, { ...action.payload, quantity: 1 }];
+                newItems = [...state.items, { ...product, quantity }];
             }
 
-            const total = newItems.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
-            const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+            const total = newItems.reduce((sum, item) => {
+                const itemPrice = parseFloat(item.price);
+                const itemQuantity = parseInt(item.quantity);
+
+                if (isNaN(itemPrice) || isNaN(itemQuantity)) {
+                    console.error("CartReducer - ERROR: Precio o cantidad de item no son números. Item:", item);
+                    return sum;
+                }
+                const subtotal = itemPrice * itemQuantity;
+                console.log(`Item: ${item.title}, Precio: ${itemPrice}, Cantidad: ${itemQuantity}, Subtotal Item: ${subtotal}`);
+                return sum + subtotal;
+            }, 0);
+            const itemCount = newItems.reduce((sum, item) => sum + parseInt(item.quantity || 0), 0);
+
+            console.log("CartReducer - Nuevo Estado Calculado: Total:", total, "Cantidad Items:", itemCount);
 
             return {
                 ...state,
@@ -45,9 +61,13 @@ function cartReducer(state, action) {
 
         case CART_ACTIONS.REMOVE_ITEM: {
             const newItems = state.items.filter(item => item.id !== action.payload);
-
-            const total = newItems.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
-            const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+            const total = newItems.reduce((sum, item) => {
+                const itemPrice = parseFloat(item.price);
+                const itemQuantity = parseInt(item.quantity);
+                if (isNaN(itemPrice) || isNaN(itemQuantity)) return sum;
+                return sum + (itemPrice * itemQuantity);
+            }, 0);
+            const itemCount = newItems.reduce((sum, item) => sum + parseInt(item.quantity || 0), 0);
 
             return {
                 ...state,
@@ -65,11 +85,16 @@ function cartReducer(state, action) {
             }
 
             const newItems = state.items.map(item =>
-                item.id === id ? { ...item, quantity } : item
+                item.id === id ? { ...item, quantity: parseInt(quantity) } : item
             );
 
-            const total = newItems.reduce((sum, item) => sum + (item.precio * item.quantity), 0);
-            const itemCount = newItems.reduce((sum, item) => sum + item.quantity, 0);
+            const total = newItems.reduce((sum, item) => {
+                const itemPrice = parseFloat(item.price);
+                const itemQuantity = parseInt(item.quantity);
+                if (isNaN(itemPrice) || isNaN(itemQuantity)) return sum;
+                return sum + (itemPrice * itemQuantity);
+            }, 0);
+            const itemCount = newItems.reduce((sum, item) => sum + parseInt(item.quantity || 0), 0);
 
             return {
                 ...state,
@@ -88,9 +113,12 @@ function cartReducer(state, action) {
             };
 
         case CART_ACTIONS.TOGGLE_CART:
+            console.log("toggleCart llamado. Estado actual:", state.isOpen);
+            const newIsOpenState = !state.isOpen;
+            console.log("Nuevo estado isOpen:", newIsOpenState);
             return {
                 ...state,
-                isOpen: !state.isOpen
+                isOpen: newIsOpenState
             };
 
         default:
@@ -98,7 +126,7 @@ function cartReducer(state, action) {
     }
 }
 
-export const CartContext = createContext();
+const CartContext = createContext();
 
 export const useCart = () => {
     const context = useContext(CartContext);
@@ -111,47 +139,13 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, initialState);
     const cartRef = useRef(null);
-    const timeoutRef = useRef(null);
-    const { showNotification } = useNotification();
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            const cartButton = document.getElementById('cart-button');
-
-            if (cartRef.current && !cartRef.current.contains(event.target) && (!cartButton || !cartButton.contains(event.target))) {
-                dispatch({ type: CART_ACTIONS.TOGGLE_CART });
-            }
-        };
-
-        if (state.isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [state.isOpen]);
-
-    const addToCart = (product) => {
-        dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: product });
-
-        showNotification(`${product.titulo} agregado al carrito`, 'success', 2000);
-
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-
-        if (!state.isOpen) {
-            dispatch({ type: CART_ACTIONS.TOGGLE_CART });
-            timeoutRef.current = setTimeout(() => {
-                dispatch({ type: CART_ACTIONS.TOGGLE_CART });
-            }, 2000);
-        }
+    const addToCart = (product, quantity = 1) => {
+        dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: { product, quantity } });
     };
 
     const removeFromCart = (productId) => {
         dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: productId });
-        showNotification('Producto eliminado del carrito', 'info', 1500);
     };
 
     const updateQuantity = (productId, quantity) => {
@@ -160,13 +154,9 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = () => {
         dispatch({ type: CART_ACTIONS.CLEAR_CART });
-        showNotification('Carrito vaciado', 'info', 1500);
     };
 
     const toggleCart = () => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
         dispatch({ type: CART_ACTIONS.TOGGLE_CART });
     };
 

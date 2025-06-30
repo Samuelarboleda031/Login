@@ -1,3 +1,4 @@
+/*src/features/recetas/pedidos/components/RecetaPedido.jsx*/
 import React, { useState } from 'react';
 import { useCart } from '../../../cart/hooks/CartContext';
 import bandejaImage from '../../assets/bandeja.jpg';

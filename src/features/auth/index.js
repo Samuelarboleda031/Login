@@ -1,3 +1,4 @@
+/*src/features/auth/index.js*/
 import authReducer from './slices/authSlice';
 
 export { authReducer };

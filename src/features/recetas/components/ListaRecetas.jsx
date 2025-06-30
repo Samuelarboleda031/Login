@@ -1,3 +1,4 @@
+/*src/features/recetas/components/ListaRecetas.jsx*/
 import React from 'react';
 import TarjetaReceta from './TarjetaReceta';
 import recetasData from '../data/recetas'; 

@@ -1,4 +1,4 @@
-// RecetasParaPedir.jsx
+/*src/features/recetas/pedidos/components/RecetasParaPedir.jsx */
 import React, { useContext } from 'react';
 import { RecetaContext } from "../../../../shared/contexts/RecetaContext";
 import RecetaPedido from './RecetaPedido';

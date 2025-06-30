@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../../cart/hooks/CartContext';
+import { useNotification } from '../../cart/hooks/useNotification';
+
 import bandejaImage from '../assets/bandeja.jpg';
 import ajiacoImage from '../assets/ajiaco.jpg';
 import tamaleImage from '../assets/tamale.jpg';
@@ -7,6 +9,7 @@ import sancochoImage from '../assets/sancocho.jpg';
 
 function TarjetaReceta({ receta, onVerDetalle }) {
     const { addToCart } = useCart();
+    const { showNotification } = useNotification();
 
     const [count, setCount] = useState(1);
     const [statusBtn, setStatusBtn] = useState(false);
@@ -27,17 +30,28 @@ function TarjetaReceta({ receta, onVerDetalle }) {
     };
 
     const handleAddToCart = () => {
+        // Asegurarse de que el precio sea un número flotante ANTES de pasarlo
+        const numericPrice = parseFloat(receta.precio);
+
+        console.log("TarjetaReceta - Precio de receta original:", receta.precio, "Precio numérico:", numericPrice);
+
+        if (isNaN(numericPrice)) {
+            console.error("Error: El precio del producto no es un número válido. Producto ID:", receta.id, "Precio:", receta.precio);
+            showNotification('Error: El precio del producto no es válido.', 'error', 3000);
+            return;
+        }
+
         const productToAdd = {
             id: receta.id,
-            titulo: receta.titulo,
-            precio: receta.precio,
-            imagen: receta.imagen,
-            descripcion: receta.ingredientes ? receta.ingredientes.join(', ') : 'Sin descripción',
+            title: receta.titulo, // Usar 'title' para el carrito
+            price: numericPrice,  // Usar el precio ya convertido a número
+            image: getImageUrl(receta.imagen),
+            description: receta.ingredientes ? receta.ingredientes.join(', ') : 'Sin descripción',
+            category: receta.categoria || 'General',
         };
 
-        for (let i = 0; i < count; i++) {
-            addToCart(productToAdd);
-        }
+        addToCart(productToAdd, count);
+        showNotification(`${count}x ${receta.titulo} agregado al carrito`, 'success', 2000);
 
         setStatusBtn(true);
         setTimeout(() => {
@@ -46,35 +60,33 @@ function TarjetaReceta({ receta, onVerDetalle }) {
         }, 1000);
     };
 
-    let imageUrl;
-    switch (receta.imagen) {
-        case 'bandeja.jpg':
-            imageUrl = bandejaImage;
-            break;
-        case 'ajiaco.jpg':
-            imageUrl = ajiacoImage;
-            break;
-        case 'tamale.jpg':
-            imageUrl = tamaleImage;
-            break;
-        case 'sancocho.jpg':
-            imageUrl = sancochoImage;
-            break;
-        default:
-            imageUrl = 'https://placehold.co/150/cccccc?Text=Sin+Imagen';
-    }
+    const getImageUrl = (imageName) => {
+        switch (imageName) {
+            case 'bandeja.jpg':
+                return bandejaImage;
+            case 'ajiaco.jpg':
+                return ajiacoImage;
+            case 'tamale.jpg':
+                return tamaleImage;
+            case 'sancocho.jpg':
+                return sancochoImage;
+            default:
+                return 'https://placehold.co/150/cccccc/000000?text=Sin+Imagen';
+        }
+    };
+
+    const displayPrice = parseFloat(receta.precio)?.toFixed(2) || 'N/A'; // Asegurar formato de display
 
     return (
         <div className="tarjeta-receta">
-            <img src={imageUrl} alt={receta.titulo} className="tarjeta-receta-imagen" />
+            <img src={getImageUrl(receta.imagen)} alt={receta.titulo} className="tarjeta-receta-imagen" />
             <h3 className="tarjeta-receta-titulo">{receta.titulo}</h3>
-            <p className="tarjeta-receta-precio">${receta.precio ? receta.precio.toFixed(2) : 'N/A'}</p>
+            <p className="tarjeta-receta-precio">${displayPrice}</p>
 
-            {/* 🔢 Selector de cantidad - Usamos clases personalizadas para el color */}
             <div className="quantity-section mb-3">
                 <div className="d-flex justify-content-center align-items-center">
                     <button
-                        className="btn-qty-control" // Clase personalizada para los botones de cantidad
+                        className="btn-qty-control"
                         onClick={disminuirCantidad}
                         disabled={disminuirDisabled}
                         aria-label="Disminuir cantidad"
@@ -83,7 +95,7 @@ function TarjetaReceta({ receta, onVerDetalle }) {
                     </button>
                     <span className="mx-3 fw-bold">{count}</span>
                     <button
-                        className="btn-qty-control" // Clase personalizada para los botones de cantidad
+                        className="btn-qty-control"
                         onClick={aumentarCantidad}
                         disabled={aumentarDisabled}
                         aria-label="Aumentar cantidad"
